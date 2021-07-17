@@ -31,6 +31,10 @@ dependencies:
   firebase_auth: ^3.0.1
   shared_preferences: ^2.0.6
   hexcolor: ^2.0.4
+  google_sign_in: "^4.5.1"
+  provider: ^5.0.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +47,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/logo.jpg
+    - assets/google_logo.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

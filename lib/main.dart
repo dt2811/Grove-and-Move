@@ -4,7 +4,12 @@ import 'Constants/ScreenRoutes.dart';
 import 'Screens/Home.dart';
 import 'Screens/Login.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -20,14 +25,8 @@ class MyApp extends StatefulWidget {
   }
   @override
   Widget build(BuildContext context) {
-    String initialRoute = ScreenNavigationConstant.HomeScreen;
     return MaterialApp(
-      initialRoute: initialRoute,
-      debugShowCheckedModeBanner: false,
-      routes: {
-        ScreenNavigationConstant.loginScreen: (context) => LoginScreen(),
-        ScreenNavigationConstant.HomeScreen: (context) => HomeScreen(),
-      },
+       home:LoginScreen(),
     );
   }
 }
