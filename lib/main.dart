@@ -20,7 +20,7 @@ class MyApp extends StatefulWidget {
   }
   @override
   Widget build(BuildContext context) {
-    String initialRoute = ScreenNavigationConstant.loginScreen;
+    String initialRoute = ScreenNavigationConstant.HomeScreen;
     return MaterialApp(
       initialRoute: initialRoute,
       debugShowCheckedModeBanner: false,
