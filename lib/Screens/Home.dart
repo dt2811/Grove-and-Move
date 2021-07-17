@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grove_and_move/Screens/InitialPage.dart';
 
-class HomeScreen extends StatefulWidget{
+class HomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _HomeScreen();
   }
-
 }
-class _HomeScreen extends State<HomeScreen>{
-    final tabs = [
-    Container(
-      color: Colors.white,
-    ),
+
+class _HomeScreen extends State<HomeScreen> {
+  final tabs = [
+    InitialPage(),
     Container(
       color: Colors.white,
     ),
@@ -25,14 +24,14 @@ class _HomeScreen extends State<HomeScreen>{
     )
   ];
 
-  int _currentIndex=0;
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Party Music"),
-        backgroundColor: Colors.white,
-        elevation: 0,
+        backgroundColor: Colors.black,
+        elevation: 10,
       ),
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -44,23 +43,20 @@ class _HomeScreen extends State<HomeScreen>{
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Home",
+            backgroundColor: Colors.blueGrey[900],
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search",
-            backgroundColor: Colors.blueGrey[900]
-          ),
+              icon: Icon(Icons.search),
+              label: "Search",
+              backgroundColor: Colors.blueGrey[900]),
           BottomNavigationBarItem(
-            icon: Icon(Icons.blur_on_outlined),
-            label: "Hosting",
-            backgroundColor: Colors.blueGrey[900]
-          ),
+              icon: Icon(Icons.blur_on_outlined),
+              label: "Hosting",
+              backgroundColor: Colors.blueGrey[900]),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: "Profile",
-            backgroundColor: Colors.blueGrey[900]
-
-          ),
+              icon: Icon(Icons.account_box),
+              label: "Profile",
+              backgroundColor: Colors.blueGrey[900]),
         ],
         onTap: (index) {
           setState(() {
@@ -70,5 +66,4 @@ class _HomeScreen extends State<HomeScreen>{
       ),
     );
   }
-
 }
