@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "198941412701",
+    "project_id": "partymusic-5d3b8",
+    "storage_bucket": "partymusic-5d3b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198941412701:android:a669adbcbf89dca4bf6cb4",
+        "android_client_info": {
+          "package_name": "com.example.grove_and_move"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198941412701-msqhtup24rg3gd72egr6p9000but9110.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_DKT9fjuIxrGkLAyaBluuoD5dcaVV0zk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198941412701-msqhtup24rg3gd72egr6p9000but9110.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
