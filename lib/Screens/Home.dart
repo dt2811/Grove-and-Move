@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grove_and_move/Screens/LandingPage.dart';
@@ -24,7 +25,7 @@ class _HomeScreen extends State<HomeScreen>{
     )
   ];
 
-  int _currentIndex=0;
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,10 +42,9 @@ class _HomeScreen extends State<HomeScreen>{
               backgroundColor: Colors.blueGrey[900]
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search",
-            backgroundColor: Colors.blueGrey[900]
-          ),
+              icon: Icon(Icons.search),
+              label: "Search",
+              backgroundColor: Colors.blueGrey[900]),
           BottomNavigationBarItem(
             icon: Icon(Icons.blur_on_outlined),
             label: "Join",
