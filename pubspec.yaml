@@ -33,6 +33,7 @@ dependencies:
   hexcolor: ^2.0.4
   google_sign_in: "^4.5.1"
   provider: ^5.0.0
+  cloud_firestore: ^2.4.0
 
 
 

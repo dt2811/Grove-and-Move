@@ -17,6 +17,7 @@ class _LoginScreen extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double Width = MediaQuery.of(context).size.width;
     double Height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: ChangeNotifierProvider(
         create: (context) => GoogleSignInProvider(),
