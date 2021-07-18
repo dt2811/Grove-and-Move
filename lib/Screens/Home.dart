@@ -35,11 +35,11 @@ class _HomeScreen extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Party Music"),
-        backgroundColor: Colors.black,
-        elevation: 10,
-      ),
+      // appBar: AppBar(
+      //   title: Text("Party Music"),
+      //   backgroundColor: Colors.black,
+      //   elevation: 10,
+      // ),
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         elevation: 10,
