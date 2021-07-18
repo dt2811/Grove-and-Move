@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:grove_and_move/Providers/GoogleSigninProvider.dart';
-import 'package:provider/provider.dart';
+import 'package:grove_and_move/Screens/LandingPage.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -14,9 +12,7 @@ class HomeScreen extends StatefulWidget{
 }
 class _HomeScreen extends State<HomeScreen>{
     final tabs = [
-    Container(
-      color: Colors.white,
-    ),
+     LandingPage(),
     Container(
       color: Colors.white,
     ),
@@ -32,14 +28,9 @@ class _HomeScreen extends State<HomeScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Party Music"),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        elevation: 10,
+        elevation:10,
         type: BottomNavigationBarType.shifting,
         fixedColor: Colors.green,
         currentIndex: _currentIndex,
@@ -47,6 +38,7 @@ class _HomeScreen extends State<HomeScreen>{
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Home",
+              backgroundColor: Colors.blueGrey[900]
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
@@ -55,14 +47,13 @@ class _HomeScreen extends State<HomeScreen>{
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.blur_on_outlined),
-            label: "Hosting",
+            label: "Join",
             backgroundColor: Colors.blueGrey[900]
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
             label: "Profile",
             backgroundColor: Colors.blueGrey[900]
-
           ),
         ],
         onTap: (index) {
