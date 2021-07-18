@@ -30,3 +30,4 @@ Widget gridItem(String image, double height, double width, String text) {
     ),
   );
 }
+

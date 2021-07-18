@@ -1,18 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:grove_and_move/Screens/InitialPage.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
+ 
     return _HomeScreen();
   }
 }
 
 class _HomeScreen extends State<HomeScreen> {
   final tabs = [
-    InitialPage(),
+    Container(
+      color: Colors.white,
+    ),   
+    Container(
+      color: Colors.white,
+    ),
     Container(
       color: Colors.white,
     ),
