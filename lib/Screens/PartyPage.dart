@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grove_and_move/Screens/RoomPageAttendee.dart';
 import 'package:grove_and_move/Screens/RoomPageHost.dart';
 import 'dart:math';
 import 'package:grove_and_move/FirebaseHelper/firebaseHelper.dart';
@@ -48,7 +49,7 @@ class _PartyPageState extends State<PartyPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => RoomPageHost(code: code),
+                    builder: (context) => RoomPageHost(code: code,),
                   ),
                 );
               },
@@ -75,7 +76,7 @@ class _PartyPageState extends State<PartyPage> {
                       ),
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
-                        hintText: "Product name",
+                        hintText: "Room Code:",
 
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.green),
@@ -125,7 +126,7 @@ class _PartyPageState extends State<PartyPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RoomPageHost(code: joinCode),
+                            builder: (context) => RoomPageAttendee(code: joinCode),
                           ),
                         );
                       }

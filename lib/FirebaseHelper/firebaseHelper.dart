@@ -36,5 +36,25 @@ class FireBaseHelper {
     }).then((value) {print('success');})
         .catchError((error) => print("Failed to make room: $error"));;
   }
+  Future<void> deleteRoom(String code){
+    DocumentReference room = firestore.collection('rooms').doc(code);
+    return room.delete().then((value) {print('success');})
+        .catchError((error) => print("Failed to make room: $error"));;
+  }
+  Future<void> leaveRoom(String code) async {
+    DocumentReference room = firestore.collection('rooms').doc(code);
+    DocumentSnapshot snapshot;
+    List people=[];
+    await room.get().then((value)  {
+      snapshot = value;
+      people=snapshot.get("people");
+    });
+
+    people.remove(mUser!.uid);
+    return room.update({
+      'people':people,
+    }).then((value) {print('success');})
+        .catchError((error) => print("Failed to make room: $error"));;
+  }
 
 }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:grove_and_move/FirebaseHelper/firebaseHelper.dart';
-import 'package:grove_and_move/Screens/Home.dart';
 
-class RoomPageHost extends StatefulWidget {
+import 'Home.dart';
+
+class RoomPageAttendee extends StatefulWidget {
   String code;
-  RoomPageHost({required this.code});
+  RoomPageAttendee({required this.code});
   @override
-  _RoomPageHostState createState() => _RoomPageHostState();
+  _RoomPageAttendeeState createState() => _RoomPageAttendeeState();
 }
 
-class _RoomPageHostState extends State<RoomPageHost> {
-
+class _RoomPageAttendeeState extends State<RoomPageAttendee> {
   @override
   Widget build(BuildContext context) {
     double Height =MediaQuery.of(context).size.height;
@@ -36,7 +36,7 @@ class _RoomPageHostState extends State<RoomPageHost> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "End Room",
+                      "Leave Room",
                       style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class _RoomPageHostState extends State<RoomPageHost> {
               ),
               onTap: () async {
                 FireBaseHelper fireBaseHelper = new FireBaseHelper();
-                await fireBaseHelper.deleteRoom(widget.code);
+                await fireBaseHelper.leaveRoom(widget.code);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
