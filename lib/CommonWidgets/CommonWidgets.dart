@@ -35,9 +35,9 @@ Widget gridItem(String image, double height, double width, String text) {
 }
 Widget TopMusicCards(double Height,double Width,String Url,String Name,String Artist){
   return Container(
+
     width: Width*0.4,
       decoration:BoxDecoration(
-
           border: Border.all(
               width: 1.0
           ),
@@ -49,8 +49,17 @@ Widget TopMusicCards(double Height,double Width,String Url,String Name,String Ar
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          height:0.2*Height,
+          height:0.18*Height,
           width: 0.4*Width,
+          decoration:BoxDecoration(
+              border: Border.all(
+                  width: 1.0
+              ),
+              borderRadius: BorderRadius.only(
+                 topLeft:  Radius.circular(10.0) ,
+                topRight:  Radius.circular(10.0),
+              )
+          ),
           child:Image.network('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',fit: BoxFit.fill,),
         ),
         Container(
@@ -58,7 +67,7 @@ Widget TopMusicCards(double Height,double Width,String Url,String Name,String Ar
           child: Text('SONG name',style: TextStyle(fontSize:Height*0.03,color: Colors.white),),
         ),
         Container(
-          margin:EdgeInsets.only(top: Height*0.003),
+          margin:EdgeInsets.only(top: Height*0.004),
           child: Text('artist name',style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
         ),
       ],
