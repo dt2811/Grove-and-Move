@@ -17,10 +17,10 @@ class _LandingPage extends State<LandingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchMusicList();
+    //fetchMusicList();
   }
 
-  fetchMusicList()async{
+  /*fetchMusicList()async{
     print("reached fetchMusicList");
     List result = await FireBaseHelper().getMusicDetails();
     if(result==null){
@@ -33,7 +33,7 @@ class _LandingPage extends State<LandingPage> {
         print("------------------------");
       });
     }
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
     double Height = MediaQuery.of(context).size.height;
