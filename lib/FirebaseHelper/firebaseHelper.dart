@@ -56,11 +56,32 @@ class FireBaseHelper {
     }).then((value) {print('success');})
         .catchError((error) => print("Failed to make room: $error"));
   }
+  Future<void> removeFromRoom(String code,String id) async {
+    DocumentReference room = firestore.collection('rooms').doc(code);
+    DocumentSnapshot snapshot;
+    List people=[];
+    await room.get().then((value)  {
+      snapshot = value;
+      people=snapshot.get("people");
+    });
+
+    people.remove(id);
+    return room.update({
+      'people':people,
+    }).then((value) {print('success');})
+        .catchError((error) => print("Failed to make room: $error"));
+  }
   Stream<DocumentSnapshot> roomDetails(String code){
     DocumentReference room = firestore.collection('rooms').doc(code);
     return room.snapshots();
   }
-
+  Future<void> changeHost(String code,String id){
+    DocumentReference room = firestore.collection('rooms').doc(code);
+    return room.update({
+      'admin':id,
+    }).then((value) {print('success');})
+        .catchError((error) => print("Failed to make room: $error"));;
+  }
   ///
   Future getMusicDetails() async{
     List allData=[];

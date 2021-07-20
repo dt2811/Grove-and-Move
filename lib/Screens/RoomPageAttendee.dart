@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:grove_and_move/FirebaseHelper/firebaseHelper.dart';
 
 import 'Home.dart';
+import 'RoomPageHost.dart';
 
 class RoomPageAttendee extends StatefulWidget {
   String code;
@@ -16,7 +19,9 @@ class RoomPageAttendee extends StatefulWidget {
 class _RoomPageAttendeeState extends State<RoomPageAttendee> {
   FireBaseHelper fireBaseHelper = new FireBaseHelper();
   bool _isDeleting = false;
+  bool _isChanging = false;
 
+  User? mUser=FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     double Height = MediaQuery.of(context).size.height;
@@ -27,6 +32,31 @@ class _RoomPageAttendeeState extends State<RoomPageAttendee> {
         if (snapshot.hasError) {
           return Text('Something went wrong');
         } else if (snapshot.hasData || snapshot.data != null) {
+          List participants = [];
+          if (!_isDeleting) participants = snapshot.data!.get('people');
+
+          if(snapshot.data!.get('admin')==mUser!.uid&&!_isChanging) {
+            _isChanging=true;
+            fireBaseHelper.leaveRoom(widget.code);
+            WidgetsBinding.instance!.addPostFrameCallback((_) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RoomPageHost(
+                    code: widget.code,
+                  ),
+                ),
+              );
+            });
+
+          }
+          if(!participants.contains(mUser!.uid)&&!_isChanging&&!_isDeleting) {
+            _isDeleting=true;
+            SchedulerBinding.instance!.addPostFrameCallback((_) {
+              Navigator.of(context).pop();
+            });
+
+          }
           return _isDeleting
               ? Padding(
                   padding: const EdgeInsets.only(
@@ -43,54 +73,60 @@ class _RoomPageAttendeeState extends State<RoomPageAttendee> {
                 )
               : Scaffold(
                   body: SafeArea(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              right: Width * 0.4,
-                              bottom: Height * 0.02,
-                              top: Height * 0.02),
-                          child: Text(
-                            'Room Code: ' + snapshot.data!.get("code"),
-                            style: TextStyle(
-                                fontSize: Height * 0.05, color: Colors.black),
-                          ),
-                        ),
-                        InkWell(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.red,
+                    child: Container(
+                      height: double.infinity,
+                      color: Colors.black,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  right: Width * 0.4,
+                                  bottom: Height * 0.02,
+                                  top: Height * 0.02),
+                              child: Text(
+                                'Room Code: ' + snapshot.data!.get("code"),
+                                style: TextStyle(
+                                    fontSize: Height * 0.05, color: Colors.white),
+                              ),
                             ),
-                            margin: EdgeInsets.only(
-                                left: 8, right: 8, bottom: 12, top: 8),
-                            padding: EdgeInsets.all(14),
-                            height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Leave Room",
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                  overflow: TextOverflow.ellipsis,
+                            InkWell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.red,
                                 ),
-                              ],
+                                margin: EdgeInsets.only(
+                                    left: 8, right: 8, bottom: 12, top: 8),
+                                padding: EdgeInsets.all(14),
+                                height: 50,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Leave Room",
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () async {
+                                setState(() {
+                                  _isDeleting = true;
+                                });
+                                FireBaseHelper fireBaseHelper =
+                                    new FireBaseHelper();
+                                fireBaseHelper.leaveRoom(widget.code);
+                                Navigator.pop(context);
+                              },
                             ),
-                          ),
-                          onTap: () async {
-                            setState(() {
-                              _isDeleting = true;
-                            });
-                            FireBaseHelper fireBaseHelper =
-                                new FireBaseHelper();
-                            fireBaseHelper.leaveRoom(widget.code);
-                            Navigator.pop(context);
-                          },
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 );
