@@ -24,7 +24,6 @@ class _MusicScreenState extends State<MusicScreen> {
     super.initState();
      playMusic();
   }
-
   void playMusic() async{
   PlayerState status=await player.getStatus();
     if(status!=PlayerState.STOPPED){
@@ -39,34 +38,14 @@ class _MusicScreenState extends State<MusicScreen> {
     else{
       print('error');
     }
-  }
+  }//function to play music.
 
   void changeProgressBarInRealTime() {
     if(isPlaying){
     MusicPlayer.audioPlayer.onAudioPositionChanged.listen((Duration  p)  {
-      setState(()  {
-        currentPosition = p;
-      });
+     progressBarChange(p.inSeconds.toDouble());
     });}
-  }
-
-  String conversion(Duration p) {
-    if(p.inMinutes>0){
-      if((p.inSeconds%60)>=10){
-      return p.inMinutes.toString() + " : "+(p.inSeconds%60).toString();}
-      else{
-        return p.inMinutes.toString() +" : 0"+(p.inSeconds%60).toString();
-      }
-    }
-     else {
-      if(p.inSeconds>=10){
-        return "00"+" : "+(p.inSeconds%60).toString();}
-      else{
-        return "00" +" : 0"+(p.inSeconds%60).toString();
-      }
-    }
-  } // function to convert seconds to minutes.
-
+  }// function to progress bar automatically in background.
 
   void slideToChangeTime (double value) async{
    player.stop();
@@ -74,9 +53,7 @@ class _MusicScreenState extends State<MusicScreen> {
     bool isChanged=await player.playNewSong("https://firebasestorage.googleapis.com/v0/b/partymusic-5d3b8.appspot.com/o/Music%2FAA%20Namo%20Namo.mp3?alt=media&token=c3dd9182-20a2-45d7-9be9-3724426b76ee",new Duration(seconds: value.toInt()));
     if(isChanged){
       onMusicStateChange();
-      setState(() {
-        currentPosition=Duration(seconds: value.toInt());
-      });
+     progressBarChange(value);
     }
     else{
       print('change');
@@ -86,21 +63,53 @@ class _MusicScreenState extends State<MusicScreen> {
   void onMusicStateChange(){
     MusicPlayer.audioPlayer.onPlayerStateChanged.listen((PlayerState s)  {
      if(s==PlayerState.PAUSED||s==PlayerState.STOPPED||s==PlayerState.COMPLETED){
-       setState(() {
-         isPlaying = false;
-         btnIcon = Icons.play_circle_filled_rounded;
-       });
+        IconChange(true);
      }
      else if(s==PlayerState.PLAYING){
-       setState(() {
-         btnIcon = Icons.pause_circle_filled_rounded;
-         isPlaying=true;
-       });
+       IconChange(false);
      }
   });
   }// function to change play and paused button based on music player status.
 
+  void progressBarChange(double value){
+    if(this.mounted){
+      setState(() {
+        currentPosition=Duration(seconds: value.toInt());
+      });
+    }
+  }// function to change progress bar position.
+  void IconChange(bool i){
+    if(this.mounted){
+    if(i){
+    setState(() {
+      isPlaying = false;
+      btnIcon = Icons.play_circle_filled_rounded;
+    });}
+    else{
+      setState(() {
+        btnIcon = Icons.pause_circle_filled_rounded;
+        isPlaying=true;
+      });
+    }
+    }
+  }// function to change icons
 
+  String conversion(Duration p) {
+    if(p.inMinutes>0){
+      if((p.inSeconds%60)>=10){
+        return p.inMinutes.toString() + " : "+(p.inSeconds%60).toString();}
+      else{
+        return p.inMinutes.toString() +" : 0"+(p.inSeconds%60).toString();
+      }
+    }
+    else {
+      if(p.inSeconds>=10){
+        return "00"+" : "+(p.inSeconds%60).toString();}
+      else{
+        return "00" +" : 0"+(p.inSeconds%60).toString();
+      }
+    }
+  } // function to convert seconds to minutes.
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
