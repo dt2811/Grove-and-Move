@@ -61,6 +61,21 @@ class FireBaseHelper {
     return room.snapshots();
   }
 
+  ///
+  Future getMusicDetails() async{
+    List allData=[];
+    try{
+      final CollectionReference musicData = FirebaseFirestore.instance.collection("Songs");
+      await musicData.get().then((querySnapshot){
+        querySnapshot.docs.forEach((element) {
+          allData.add(element.data());
+        });
+      });
+    }
+    catch(error){
+      return null;
+    }
+  }
 
 
 }
