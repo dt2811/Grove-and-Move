@@ -144,13 +144,12 @@ class _MusicScreenState extends State<MusicScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
+      body: SafeArea(
+        child:Container(
+          padding:EdgeInsets.only(top:size.height*0.05),
         color: Colors.black87,
         child: Column(
           children: [
-            SizedBox(
-              height: size.height * 0.160,
-            ),
             songImage!=null?CircleAvatar(
               radius: size.height*0.25,
               backgroundImage: NetworkImage(songImage),
@@ -242,6 +241,7 @@ class _MusicScreenState extends State<MusicScreen> {
           ],
         ),
       ),
+    )
     );
   }
 }

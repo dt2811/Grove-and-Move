@@ -78,6 +78,7 @@ class _SearchScreen extends State {
     return SafeArea(
       child: SingleChildScrollView(
         child:Container(
+          height: Height,
         color: Colors.black,
         child: Column(
           children: [
