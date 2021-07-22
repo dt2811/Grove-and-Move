@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grove_and_move/CommonWidgets/CommonWidgets.dart';
+import 'package:grove_and_move/Constants/KeyConstants.dart';
 import 'package:grove_and_move/FirebaseHelper/firebaseHelper.dart';
 import 'package:grove_and_move/Screens/MusicScreen.dart';
 
@@ -12,28 +14,33 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPage extends State<LandingPage> {
-  List allMusicData=[];
+  List Results = [];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    //fetchMusicList();
+
+      fetchTopMusic();
+
   }
 
-  /*fetchMusicList()async{
-    print("reached fetchMusicList");
-    List result = await FireBaseHelper().getMusicDetails();
-    if(result==null){
-      print("unable to get data----------------------------------------------------------------------------------------------------------------------------");
-    }
-    else{
+  fetchTopMusic() {
+    List Temp = [];
+    FirebaseFirestore.instance
+        .collection(KeyContsants.Songs)
+        .limit(10)
+        .get()
+        .then((value) {
+      for (int i = 0; i < value.docs.length; i++) {
+        Temp.add(value.docs[i].data());
+      }
       setState(() {
-        allMusicData=result;
-        print(allMusicData);
-        print("------------------------");
+        Results = Temp;
+        print("done");
       });
-    }
-  }*/
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double Height = MediaQuery.of(context).size.height;
@@ -45,57 +52,60 @@ class _LandingPage extends State<LandingPage> {
             color: Colors.black,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Container(
-                margin: EdgeInsets.only(
-                    right: Width * 0.4,
-                    bottom: Height * 0.02,
-                    top: Height * 0.02),
-                child: Text(
-                  'Recently Added Songs',
-                  style:
-                      TextStyle(fontSize: Height * 0.05, color: Colors.white),
-                ),
-              ),
-              Container(
-                  height: Height * 0.28,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MusicScreen(
-                                      songUrl: 
-                                          "https://firebasestorage.googleapis.com/v0/b/partymusic-5d3b8.appspot.com/o/Music%2FKalank%20Title%20Track%20-%20LyricalAlia%20Bhatt%20%2C%20Varun%20DhawanArijit%20SinghPritam%20Amitabh.mp3?alt=media&token=a5f58542-768c-4b0b-8b64-6dab8c53ff2d",
-                                      albumId: "",
-                                      movieName: "",
-                                      songImage: "",
-                                      songName: "",
-                                    )),
+              (Results != null && Results.length > 0)
+                  ? Container(
+                      margin: EdgeInsets.only(
+                          right: Width * 0.4,
+                          bottom: Height * 0.02,
+                          top: Height * 0.02),
+                      child: Text(
+                        'Recently Added Songs',
+                        style: TextStyle(
+                            fontSize: Height * 0.05, color: Colors.white),
+                      ),
+                    )
+                  : Container(),
+              (Results != null && Results.length > 0)
+                  ? Container(
+                      height: Height * 0.3,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MusicScreen(
+                                          Results[index][KeyContsants.SongName],
+                                          Results[index]
+                                              [KeyContsants.ImageLink],
+                                          Results[index][KeyContsants.SongLink],
+                                          Results[index][KeyContsants.Album][0],
+                                          Results[index]
+                                              [KeyContsants.Artists],"328")));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: Width * 0.02, right: Width * 0.02),
+                              child: TopMusicCards(
+                                  Height,
+                                  Width,
+                                  Results[index][KeyContsants.ImageLink],
+                                  Results[index][KeyContsants.SongName],
+                                  Results[index][KeyContsants.Artists][0]),
+                            ),
                           );
-                          /* Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>ProductDetailsMachinery(data[KeyConstants.RESULT][index][KeyConstants.ID])) )*/
                         },
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: Width * 0.02, right: Width * 0.02),
-                          child:
-                              TopMusicCards(Height, Width, 'abc', 'abc', 'abc'),
-                        ),
-                      );
-                    },
-                    itemCount: 10,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 10,
-                        width: 10,
-                      );
-                    },
-                  )),
+                        itemCount: Results.length,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            height: 10,
+                            width: 10,
+                          );
+                        },
+                      ))
+                  : Container(),
               Container(
                 margin: EdgeInsets.only(
                     right: Width * 0.7,
@@ -108,32 +118,33 @@ class _LandingPage extends State<LandingPage> {
                 ),
               ),
               Container(
-                  height: Height * 0.28,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          /* Navigator.push(
+                height: Height * 0.28,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        /* Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>ProductDetailsMachinery(data[KeyConstants.RESULT][index][KeyConstants.ID])) )*/
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: Width * 0.02, right: Width * 0.02),
-                          child: ArtistCard(Height, Width, 'abc', 'abc', 'abc'),
-                        ),
-                      );
-                    },
-                    itemCount: 10,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 10,
-                        width: 10,
-                      );
-                    },
-                  )),
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: Width * 0.02, right: Width * 0.02),
+                        child: ArtistCard(Height, Width, 'abc', 'abc', 'abc'),
+                      ),
+                    );
+                  },
+                  itemCount: 10,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: 10,
+                      width: 10,
+                    );
+                  },
+                ),
+              ),
               Container(
                 margin: EdgeInsets.only(
                     right: Width * 0.5,
@@ -222,7 +233,7 @@ class _LandingPage extends State<LandingPage> {
                   ),
                 ],
               )),
-              Container(
+              /*Container(
                 margin: EdgeInsets.only(
                     right: Width * 0.6,
                     bottom: Height * 0.02,
@@ -260,7 +271,7 @@ class _LandingPage extends State<LandingPage> {
                         width: 10,
                       );
                     },
-                  )),
+                  ))*/
             ]),
           ),
         ),

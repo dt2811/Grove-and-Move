@@ -35,7 +35,6 @@ Widget gridItem(String image, double height, double width, String text) {
 }
 Widget TopMusicCards(double Height,double Width,String Url,String Name,String Artist){
   return Container(
-
     width: Width*0.4,
       decoration:BoxDecoration(
           border: Border.all(
@@ -48,7 +47,7 @@ Widget TopMusicCards(double Height,double Width,String Url,String Name,String Ar
     child:Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
+        Url!=null ?Container(
           height:0.18*Height,
           width: 0.4*Width,
           decoration:BoxDecoration(
@@ -60,16 +59,16 @@ Widget TopMusicCards(double Height,double Width,String Url,String Name,String Ar
                 topRight:  Radius.circular(10.0),
               )
           ),
-          child:Image.network('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',fit: BoxFit.fill,),
-        ),
-        Container(
+          child:Image.network(Url,fit: BoxFit.fill,),
+        ):Container(),
+        Name!=null?Container(
          margin:EdgeInsets.only(top: Height*0.01),
-          child: Text('SONG name',style: TextStyle(fontSize:Height*0.03,color: Colors.white),),
-        ),
-        Container(
+          child: Text(Name,style: TextStyle(fontSize:Height*0.03,color: Colors.white,),maxLines: 1,),
+        ):Container(),
+        Artist!=null?Container(
           margin:EdgeInsets.only(top: Height*0.004),
-          child: Text('artist name',style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
-        ),
+          child: Text('By ${Artist}',style: TextStyle(fontSize:Height*0.02,color: Colors.white),maxLines: 1),
+        ):Container(),
       ],
     )
   );
@@ -88,37 +87,62 @@ Widget TopPlaylist(String Playlist,double Height,double Width){
    child:Text(Playlist,style: TextStyle(fontSize: Height*0.05,color: Colors.white,),textAlign: TextAlign.center,) ,
   );
 }
-/*Widget MusicCards(double Height,double Width,String Url,String Name,String Artist){
+Widget MusicCards(double Height,double Width,String ImageUrl,String Name,String MovieName,List Artist, ){
   return Container(
       decoration:BoxDecoration(
-
           border: Border.all(
-              width: 1.0
+              width: 1.0,
+            color: Colors.white
           ),
           borderRadius: BorderRadius.all(
               Radius.circular(10.0) //
           )
       ),
       child:Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
+          ImageUrl!=null?Container(
+            margin: EdgeInsets.only(top:Height*0.01,bottom:Height*0.01),
             height:0.2*Height,
-            width: 0.2*Width,
-            child:Image.network('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',fit: BoxFit.fill,),
-          ),
+            width: 0.3*Width,
+            child:Image.network(ImageUrl,fit: BoxFit.fill,scale: 0.5,),
+          ):Container(),
           Container(
-            margin:EdgeInsets.only(top: Height*0.01),
-            child: Text('SONG name',style: TextStyle(fontSize:Height*0.03,color: Colors.white),),
+            child:Column(
+              children: [
+                Name!=null?Container(
+                child: Row(
+                children: [
+                Text('Song name :  ',style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
+                Text(Name,style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
+              ],
+            ),
+                ):Container(),
+                MovieName!=null?Container(
+                  margin:EdgeInsets.only(top: Height*0.03),
+                    child: Row(
+                      children: [
+                        Text('Movie name :  ',style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
+                        Text(MovieName,style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
+                      ],
+                    )
+                ):Container(),
+                Artist!=null ? Container(
+                  margin:EdgeInsets.only(top: Height*0.03),
+                  child: Row(
+                    children: [
+                      Text('  Artist names :  ',style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
+                      Text(Artist[0],style: TextStyle(fontSize:Height*0.02,color: Colors.white,),softWrap: true,overflow: TextOverflow.ellipsis,),
+                    ],
+                  ),):Container(),
+              ],
+            ),
           ),
-          Container(
-            margin:EdgeInsets.only(top: Height*0.003),
-            child: Text('artist name',style: TextStyle(fontSize:Height*0.02,color: Colors.white)),
-          ),
+
         ],
       )
   );
-}*/
+}
 
 Widget ArtistCard(double Height,double Width,String Url,String Name,String Artist){
   return Container(

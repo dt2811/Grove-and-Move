@@ -4,25 +4,31 @@ import 'package:grove_and_move/utils/MusicPlayer.dart';
 
 
 class MusicScreen extends StatefulWidget {
-  final String songUrl;
-  final String songName,movieName,songImage,albumId;
-  const MusicScreen({Key? key,this.songUrl="",this.songImage="",this.songName="",this.movieName="",this.albumId=""}) : super(key: key);
+ String songLink,songName,songImage,movieName,duration;
+ 
+ List artist=[];
+ MusicScreen(this.songName,this.songImage,this.songLink,this.movieName,this.artist,this.duration);
 
   @override
-  _MusicScreenState createState() => _MusicScreenState();
+  _MusicScreenState createState() => _MusicScreenState(this.songName,this.songImage,this.songLink,this.movieName,this.artist,this.duration);
 }
 
 class _MusicScreenState extends State<MusicScreen> {
+  String songLink,songName,songImage,movieName,duration;
+  List artist=[];
+
+  _MusicScreenState(this.songName,this.songImage,this.songLink,this.movieName,this.artist,this.duration);
 
   IconData btnIcon = Icons.pause_circle_filled_rounded;
   MusicPlayer player=new MusicPlayer();
   bool isPlaying=false;
-  Duration duration= Duration(seconds: 328);
   Duration currentPosition =Duration(seconds: 0);
   @override
   void initState()  {
     super.initState();
+    if(songLink!=null){
      playMusic();
+    }
   }
   void playMusic() async{
   PlayerState status=await player.getStatus();
@@ -30,7 +36,7 @@ class _MusicScreenState extends State<MusicScreen> {
       player.stop();
     }
 
-    isPlaying= await player.playNewSong("https://firebasestorage.googleapis.com/v0/b/partymusic-5d3b8.appspot.com/o/Music%2FAA%20Namo%20Namo.mp3?alt=media&token=c3dd9182-20a2-45d7-9be9-3724426b76ee",new Duration(seconds: 0));
+    isPlaying= await player.playNewSong(songLink,new Duration(seconds: 0));
     if(isPlaying){
      changeProgressBarInRealTime();
      onMusicStateChange();
@@ -50,7 +56,7 @@ class _MusicScreenState extends State<MusicScreen> {
   void slideToChangeTime (double value) async{
    player.stop();
 
-    bool isChanged=await player.playNewSong("https://firebasestorage.googleapis.com/v0/b/partymusic-5d3b8.appspot.com/o/Music%2FAA%20Namo%20Namo.mp3?alt=media&token=c3dd9182-20a2-45d7-9be9-3724426b76ee",new Duration(seconds: value.toInt()));
+    bool isChanged=await player.playNewSong(songLink,new Duration(seconds: value.toInt()));
     if(isChanged){
       onMusicStateChange();
      progressBarChange(value);
@@ -110,6 +116,30 @@ class _MusicScreenState extends State<MusicScreen> {
       }
     }
   } // function to convert seconds to minutes.
+  /*@override
+  void dispose() {
+    super.dispose();
+    player.stop();
+  }*/
+
+  String convertStringDuration(String Duration){
+    int d=int.parse(Duration);
+    if(d/60>0){
+      if(d%60>=10){
+        return (d/60).floor().toString() + " : "+(d%60).toString();}
+      else{
+        return (d/60).floor().toString() +" : 0"+(d%60).toString();
+      }
+    }
+    else {
+      if(d>=10){
+        return "00"+" : "+(d%60).toString();}
+      else{
+        return "00" +" : 0"+(d%60).toString();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -121,25 +151,30 @@ class _MusicScreenState extends State<MusicScreen> {
             SizedBox(
               height: size.height * 0.160,
             ),
-            CircleAvatar(
+            songImage!=null?CircleAvatar(
               radius: size.height*0.25,
-              backgroundImage: NetworkImage(
-                  "https://firebasestorage.googleapis.com/v0/b/partymusic-5d3b8.appspot.com/o/SongCovers%2FnamoNamo.jpg?alt=media&token=125bad06-c5ce-48d6-919a-2154b6afc823"),
-            ),
+              backgroundImage: NetworkImage(songImage),
+            ):Container(),
             SizedBox(
               height: size.height * 0.027,
             ),
-            Container(
+            songName!=null?Container(
               child:Text(
-              "Namo Namo",
+              songName,
               style:
                   TextStyle(color: Colors.white, fontSize: size.height * 0.026),
-            ),),
-            Container(child:Text(
-              "Singer : Amit Trivedi",
+            ),):Container(),
+            movieName!=null?Container(child:Text(
+              "Movie Name: ${movieName}",
+              style:
+              TextStyle(color: Colors.grey, fontSize: size.height * 0.019),
+            ),):Container(),
+            artist!=null?Container(child:Text(
+              "Singer : ${artist.toString()}",
               style:
                   TextStyle(color: Colors.grey, fontSize: size.height * 0.019),
-            ),),
+            ),):Container(),
+
             Container(
                 padding: EdgeInsets.only(left: size.width*0.04,right: size.width*0.04),
                 child: Slider(
@@ -147,7 +182,7 @@ class _MusicScreenState extends State<MusicScreen> {
                     activeColor: Colors.white,
                     value: currentPosition.inSeconds.toDouble(),
                     min: 0.0,
-                    max: duration.inSeconds.toDouble(),
+                    max: double.parse(duration),
                     onChanged: (value) {
                       slideToChangeTime(value);
                     }
@@ -162,7 +197,7 @@ class _MusicScreenState extends State<MusicScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   Text(
-                    conversion(duration),
+                    convertStringDuration(duration),
                     style: TextStyle(color: Colors.white),
                   )
                 ],

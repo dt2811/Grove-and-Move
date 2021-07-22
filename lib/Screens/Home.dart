@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grove_and_move/Screens/LandingPage.dart';
+import 'package:grove_and_move/Screens/MusicScreen.dart';
 import 'package:grove_and_move/Screens/PartyPage.dart';
+import 'package:grove_and_move/Screens/SearchScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _HomeScreen();
   }
 }
 
 class _HomeScreen extends State<HomeScreen> {
+
   final tabs = [
     LandingPage(),
-    Container(
-      color: Colors.white,
-    ),
+    SearchScreen(),
     PartyPage(),
     Container(
       color: Colors.white,
@@ -27,6 +27,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _scaffoldKey = new GlobalKey<ScaffoldState>();
     return Scaffold(
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
