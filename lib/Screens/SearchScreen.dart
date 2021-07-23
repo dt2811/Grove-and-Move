@@ -191,7 +191,7 @@ class _SearchScreen extends State {
                         child: Container(
                           margin: EdgeInsets.only(
                               left: Width * 0.03, right: Width * 0.03,top: Height*0.01,bottom: Height*0.02),
-                          child: MusicCards(Height, Width, Results[index][KeyContsants.ImageLink],Results[index][KeyContsants.SongName] ,Results[index][KeyContsants.Album][0],Results[index][KeyContsants.Artists]),
+                          child: MusicCards( ImageUrl: Results[index][KeyContsants.ImageLink],Name: Results[index][KeyContsants.SongName] ,MovieName: Results[index][KeyContsants.Album][0]),//,Results[index][KeyContsants.Artists]),//Height, Width
                         ),
                       );
                     },

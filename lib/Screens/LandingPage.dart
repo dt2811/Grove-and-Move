@@ -5,6 +5,7 @@ import 'package:grove_and_move/CommonWidgets/CommonWidgets.dart';
 import 'package:grove_and_move/Constants/KeyConstants.dart';
 import 'package:grove_and_move/FirebaseHelper/firebaseHelper.dart';
 import 'package:grove_and_move/Screens/MusicScreen.dart';
+import 'package:grove_and_move/Screens/PlayList.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -166,6 +167,13 @@ class _LandingPage extends State<LandingPage> {
                       ),
                       Expanded(
                         child: GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>PlayList()) );
+                        
+                          },
                             child: TopPlaylist("abc", Height, Width)),
                       ),
                       SizedBox(

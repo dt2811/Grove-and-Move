@@ -103,16 +103,16 @@ class _MusicScreenState extends State<MusicScreen> {
   String conversion(Duration p) {
     if(p.inMinutes>0){
       if((p.inSeconds%60)>=10){
-        return p.inMinutes.toString() + " : "+(p.inSeconds%60).toString();}
+        return p.inMinutes.toString() + ":"+(p.inSeconds%60).toString();}
       else{
-        return p.inMinutes.toString() +" : 0"+(p.inSeconds%60).toString();
+        return p.inMinutes.toString() +":0"+(p.inSeconds%60).toString();
       }
     }
     else {
       if(p.inSeconds>=10){
-        return "00"+" : "+(p.inSeconds%60).toString();}
+        return "0"+":"+(p.inSeconds%60).toString();}
       else{
-        return "00" +" : 0"+(p.inSeconds%60).toString();
+        return "0" +":0"+(p.inSeconds%60).toString();
       }
     }
   } // function to convert seconds to minutes.
@@ -126,16 +126,16 @@ class _MusicScreenState extends State<MusicScreen> {
     int d=int.parse(Duration);
     if(d/60>0){
       if(d%60>=10){
-        return (d/60).floor().toString() + " : "+(d%60).toString();}
+        return (d/60).floor().toString() + ":"+(d%60).toString();}
       else{
-        return (d/60).floor().toString() +" : 0"+(d%60).toString();
+        return (d/60).floor().toString() +":0"+(d%60).toString();
       }
     }
     else {
       if(d>=10){
-        return "00"+" : "+(d%60).toString();}
+        return "0"+":"+(d%60).toString();}
       else{
-        return "00" +" : 0"+(d%60).toString();
+        return "0" +":0"+(d%60).toString();
       }
     }
   }
