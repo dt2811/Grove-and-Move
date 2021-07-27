@@ -123,7 +123,7 @@ class _MusicScreenState extends State<MusicScreen> {
   }*/
 
   String convertStringDuration(String Duration){
-    int d=int.parse(Duration);
+    int d=int.parse(Duration)+1;
     if(d/60>0){
       if(d%60>=10){
         return (d/60).floor().toString() + ":"+(d%60).toString();}
@@ -181,7 +181,7 @@ class _MusicScreenState extends State<MusicScreen> {
                     activeColor: Colors.white,
                     value: currentPosition.inSeconds.toDouble(),
                     min: 0.0,
-                    max: double.parse(duration),
+                    max: double.parse(duration)+1,
                     onChanged: (value) {
                       slideToChangeTime(value);
                     }

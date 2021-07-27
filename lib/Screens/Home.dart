@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:grove_and_move/Screens/LandingPage.dart';
 import 'package:grove_and_move/Screens/MusicScreen.dart';
 import 'package:grove_and_move/Screens/PartyPage.dart';
+import 'package:grove_and_move/Screens/PlayList.dart';
 import 'package:grove_and_move/Screens/SearchScreen.dart';
 
 class HomeScreen extends StatefulWidget {

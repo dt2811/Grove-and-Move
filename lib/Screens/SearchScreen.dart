@@ -186,12 +186,12 @@ class _SearchScreen extends State {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>MusicScreen(Results[index][KeyContsants.SongName], Results[index][KeyContsants.ImageLink], Results[index][KeyContsants.SongLink],Results[index][KeyContsants.Album][0],Results[index][KeyContsants.Artists],"308")) );
+                                  builder: (context) =>MusicScreen(Results[index][KeyContsants.SongName], Results[index][KeyContsants.ImageLink], Results[index][KeyContsants.SongLink],Results[index][KeyContsants.Album][0],Results[index][KeyContsants.Artists],Results[index][KeyContsants.Duration])) );
                         },
                         child: Container(
                           margin: EdgeInsets.only(
                               left: Width * 0.03, right: Width * 0.03,top: Height*0.01,bottom: Height*0.02),
-                          child: MusicCards( ImageUrl: Results[index][KeyContsants.ImageLink],Name: Results[index][KeyContsants.SongName] ,MovieName: Results[index][KeyContsants.Album][0]),//,Results[index][KeyContsants.Artists]),//Height, Width
+                          child: MusicCards(Height, Width, Results[index][KeyContsants.ImageLink],Results[index][KeyContsants.SongName] ,Results[index][KeyContsants.Album][0],Results[index][KeyContsants.Artists])/*MusicCards2( ImageUrl: Results[index][KeyContsants.ImageLink],Name: Results[index][KeyContsants.SongName] ,MovieName: Results[index][KeyContsants.Album][0]),//,Results[index][KeyContsants.Artists]),//Height, Width*/
                         ),
                       );
                     },
