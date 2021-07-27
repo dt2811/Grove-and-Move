@@ -23,7 +23,7 @@ class FireBaseHelper {
       'timestamp':0
 
     }).then((value) {print('success');})
-        .catchError((error) => print("Failed to make room: $error"));;
+        .catchError((error) => print("Failed to make room: $error"));
   }
   Future<void> joinRoom(String code) async {
     DocumentReference room = firestore.collection('rooms').doc(code);
@@ -38,7 +38,7 @@ class FireBaseHelper {
     return room.update({
       'people':people,
     }).then((value) {print('success');})
-        .catchError((error) => print("Failed to make room: $error"));;
+        .catchError((error) => print("Failed to make room: $error"));
   }
   Future<void> deleteRoom(String code)async {
     DocumentReference room = firestore.collection('rooms').doc(code);
@@ -84,7 +84,7 @@ class FireBaseHelper {
     return room.update({
       'admin':id,
     }).then((value) {print('success');})
-        .catchError((error) => print("Failed to make room: $error"));;
+        .catchError((error) => print("Failed to make room: $error"));
   }
   ///
   Future getMusicDetails() async{
