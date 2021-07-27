@@ -15,7 +15,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   final tabs = [
     LandingPage(),
-    SearchScreen(),
+    SearchScreen(isSelectable: false, callback: (value ) { return "";  },),
     PartyPage(),
   ];
 

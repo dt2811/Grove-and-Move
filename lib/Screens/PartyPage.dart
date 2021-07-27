@@ -82,6 +82,7 @@ class _PartyPageState extends State<PartyPage> {
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 18,
+                          color: Colors.white
                         ),
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(

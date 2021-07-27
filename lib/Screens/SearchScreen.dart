@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:grove_and_move/CommonWidgets/CommonWidgets.dart';
 import 'package:grove_and_move/Constants/KeyConstants.dart';
 import 'package:grove_and_move/Screens/MusicScreen.dart';
-
+typedef StringValue = String Function(String);
 class SearchScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return _SearchScreen();
   }
+  bool isSelectable;
+  StringValue callback;
+  SearchScreen({required this.isSelectable,required this.callback});
 }
 
-class _SearchScreen extends State {
+class _SearchScreen extends State<SearchScreen> {
   String searchQuery = 'Kedarnath';
   String dropdownValue = KeyContsants.SongName;
   Map<String, String> SearchBy = {
@@ -117,6 +121,7 @@ class _SearchScreen extends State {
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -224,94 +229,46 @@ class _SearchScreen extends State {
                           /*Container(
                     child:ListView.builder(itemBuilder: itemBuilder)
                   ),*/
-                          isSearching
-                              ? Container(
-                                  color: Colors.black,
-                                  child: Center(
-                                      child: CircularProgressIndicator()),
-                                )
-                              : Results != null && Results.length > 0
-                                  ? Container(
-                                      height: 0.56 * Height,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.vertical,
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => MusicScreen(
-                                                          Results[index][
-                                                              KeyContsants
-                                                                  .SongName],
-                                                          Results[index][
-                                                              KeyContsants
-                                                                  .ImageLink],
-                                                          Results[index][
-                                                              KeyContsants
-                                                                  .SongLink],
-                                                          Results[index]
-                                                                  [KeyContsants.Album]
-                                                              [0],
-                                                          Results[index][
-                                                              KeyContsants
-                                                                  .Artists],
-                                                          Results[index]
-                                                              [KeyContsants.Duration])));
-                                            },
-                                            child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: Width * 0.03,
-                                                    right: Width * 0.03,
-                                                    top: Height * 0.01,
-                                                    bottom: Height * 0.02),
-                                                child: MusicCards(
-                                                    Height,
-                                                    Width,
-                                                    Results[index][
-                                                        KeyContsants.ImageLink],
-                                                    Results[index]
-                                                        [KeyContsants.SongName],
-                                                    Results[index]
-                                                        [KeyContsants.Album][0],
-                                                    Results[index][KeyContsants
-                                                        .Artists]) /*MusicCards2( ImageUrl: Results[index][KeyContsants.ImageLink],Name: Results[index][KeyContsants.SongName] ,MovieName: Results[index][KeyContsants.Album][0]),//,Results[index][KeyContsants.Artists]),//Height, Width*/
-                                                ),
-                                          );
-                                        },
-                                        itemCount: Results.length,
-                                      ),
-                                    )
-                                  : Container(
-                                      color: Colors.black,
-                                      height: Height * 0.56,
-                                      child: Center(
-                                        child: Text(
-                                          Message,
-                                          style: TextStyle(
-                                              fontSize: Height * 0.03,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  isSearching?Container(
+                    color:Colors.black,child: Center(child:CircularProgressIndicator()),):Results!=null&&Results.length>0?
+                  Container(
+                    height: 0.56*Height,
+                    child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          if(widget.isSelectable) {
+
+                            widget.callback(Results[index][KeyContsants.SongName]);
+                          }
+                          else
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>MusicScreen(Results[index][KeyContsants.SongName], Results[index][KeyContsants.ImageLink], Results[index][KeyContsants.SongLink],Results[index][KeyContsants.Album][0],Results[index][KeyContsants.Artists],Results[index][KeyContsants.Duration])) );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              left: Width * 0.03, right: Width * 0.03,top: Height*0.01,bottom: Height*0.02),
+                          child: MusicCards(Height, Width, Results[index][KeyContsants.ImageLink],Results[index][KeyContsants.SongName] ,Results[index][KeyContsants.Album][0],Results[index][KeyContsants.Artists])/*MusicCards2( ImageUrl: Results[index][KeyContsants.ImageLink],Name: Results[index][KeyContsants.SongName] ,MovieName: Results[index][KeyContsants.Album][0]),//,Results[index][KeyContsants.Artists]),//Height, Width*/
+                        ),
+                      );
+                    },
+                    itemCount: Results.length,
+
+                  ),
+                  ):Container(
+                    color: Colors.black,
+                    height: Height*0.56,
+                    child: Center(child: Text(Message,style: TextStyle(fontSize: Height*0.03,color: Colors.white),),),),
+                ],
               ),
-            ),
-          )
-        : Container(
-            height: Height,
-            width: Width,
-            color: Colors.black,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Colors.blue,
-              ),
-            ),
-          );
+            )
+          ],
+        ),
+      ),
+    ),
+    );
   }
 }
