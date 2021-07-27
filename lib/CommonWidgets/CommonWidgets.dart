@@ -36,7 +36,6 @@ Widget gridItem(String image, double height, double width, String text) {
 Widget TopMusicCards(double Height, double Width, String Url, String Name,
     String Artist) {
   return Container(
-
       decoration: BoxDecoration(
           border: Border.all(
               width: 1.0
@@ -50,6 +49,7 @@ Widget TopMusicCards(double Height, double Width, String Url, String Name,
         children: [
           Url != null ? Container(
             height: 0.3 * Height,
+            width: 0.5*Width,
             decoration: BoxDecoration(
                 border: Border.all(
                     width: 1.0
@@ -186,38 +186,23 @@ Widget MusicCards(double Height, double Width, String ImageUrl, String Name,
             child: Column(
               children: [
                 Name != null ? Container(
-                  child: Row(
-                    children: [
-                      Text('Song name :  ', style: TextStyle(
-                          fontSize: Height * 0.02, color: Colors.white)),
+                  child:
                       Text(Name, style: TextStyle(
                           fontSize: Height * 0.02, color: Colors.white)),
-                    ],
-                  ),
                 ) : Container(),
                 MovieName != null ? Container(
                     margin: EdgeInsets.only(top: Height * 0.01),
-                    child: Row(
-                      children: [
-                        Text('Movie name :  ', style: TextStyle(
+                    child:Text(MovieName, style: TextStyle(
                             fontSize: Height * 0.02, color: Colors.white)),
-                        Text(MovieName, style: TextStyle(
-                            fontSize: Height * 0.02, color: Colors.white)),
-                      ],
-                    )
                 ) : Container(),
                 Artist != null ? Container(
                   margin: EdgeInsets.only(top: Height * 0.01),
-                  child: Row(
-                    children: [
-                      Text('  Artist names :  ', style: TextStyle(
-                          fontSize: Height * 0.02, color: Colors.white)),
-                      Text(Artist[0], style: TextStyle(
+                  child: Text(Artist[0], style: TextStyle(
                         fontSize: Height * 0.02, color: Colors.white,),
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,),
-                    ],
-                  ),) : Container(),
+
+                  ) : Container(),
               ],
             ),
           ),
