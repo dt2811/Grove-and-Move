@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:grove_and_move/CommonWidgets/CommonWidgets.dart';
 import 'package:grove_and_move/Constants/KeyConstants.dart';
 import 'package:grove_and_move/Screens/MusicScreen.dart';
-
+typedef StringValue = String Function(String);
 class SearchScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return _SearchScreen();
   }
+  bool isSelectable;
+  StringValue callback;
+  SearchScreen({required this.isSelectable,required this.callback});
 }
 
-class _SearchScreen extends State {
+class _SearchScreen extends State<SearchScreen> {
   String searchQuery = 'Kedarnath';
   String dropdownValue = KeyContsants.SongName;
   Map<String, String> SearchBy = {
@@ -183,6 +187,11 @@ class _SearchScreen extends State {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
+                          if(widget.isSelectable) {
+
+                            widget.callback(Results[index][KeyContsants.SongName]);
+                          }
+                          else
                           Navigator.push(
                               context,
                               MaterialPageRoute(

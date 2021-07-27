@@ -18,6 +18,10 @@ class FireBaseHelper {
       'admin':mUser!.uid,
       'code':code,
       'people':[],
+      'currentSong':"",
+      'isPaused':true,
+      'timestamp':0
+
     }).then((value) {print('success');})
         .catchError((error) => print("Failed to make room: $error"));;
   }
